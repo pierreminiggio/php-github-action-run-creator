@@ -14,8 +14,6 @@ class GithubActionRunCreator
     /**
      * @param array<string, mixed> $inputs
      * 
-     * @return GithubActionRun[]
-     * 
      * @throws NotFoundException
      * @throws RuntimeException
      * @throws UnauthorizedException
