@@ -28,15 +28,20 @@ class GithubActionRunCreator
     ): void
     {
         $curl = curl_init("https://api.github.com/repos/$owner/$repo/actions/workflows/$workflowIdOrWorkflowFileName/dispatches");
+
+        $postFields = [
+            'ref' => $ref
+        ];
+
+        if ($inputs) {
+            $postFields['inputs'] = $inputs;
+        }
         curl_setopt_array($curl, [
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_USERAGENT => GithubUserAgent::USER_AGENT,
             CURLOPT_HTTPHEADER => ['Authorization: token ' . $token],
             CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => json_encode([
-                'ref' => $ref,
-                'inputs' => $inputs
-            ])
+            CURLOPT_POSTFIELDS => json_encode($postFields)
         ]);
 
         $response = curl_exec($curl);
